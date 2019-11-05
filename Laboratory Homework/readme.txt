@@ -1,1 +1,1 @@
-Homework counter: 2
+Homework counter: 3
