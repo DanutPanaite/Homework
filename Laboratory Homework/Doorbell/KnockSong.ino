@@ -54,7 +54,7 @@ void loop() {
     lastKnock = millis();
     shouldPlaySong = 1; // a variable for keeping track if i should play the song or not
   }
-  if(songState != 0){
+  if(shouldPlaySong != 0){
     if(millis() > lastKnock + timeBeforeSong){
       playSong();
       shouldPlaySong = 0;
