@@ -11,6 +11,6 @@ c.Joystick  <br>
 d.MAX7219 Driver  <br>
 e.Potentiometer  <br>
 f.Wires  <br>
+<br>
   
-  
-Picture:   
+[Assembled Hardware](https://imgur.com/a/f7fyY5l)   
