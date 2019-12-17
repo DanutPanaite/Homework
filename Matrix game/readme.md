@@ -5,7 +5,7 @@ way from the top of the screen. Moving the joystick sideways(left to right or ri
 down) the car will go up towards the other cars. You have thwee lives and three super powers at your disposal, the three supers can be
 activated using the joystick button and they will grant you invincibility for a short time.  <br>
 <br>
-[Video demonstration](https://www.youtube.com/watch?v=h1oUutEQzFg)
+[Video demonstration](https://www.youtube.com/watch?v=h1oUutEQzF)
 <br>
 <h2>USED HARDWARE</h2>  
 a.8x8 LED Matrix  <br>
