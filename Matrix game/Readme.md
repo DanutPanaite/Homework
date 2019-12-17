@@ -1,4 +1,4 @@
-RUSH HOUR
+RUSH HOUR \n
 HOW TO PLAY
  In Rush Hour, you are controlling a car using the joystick and your purpose is to rack up points by dodging the cars that will come your
 way from the top of the screen. Moving the joystick sideways(left to right or right to left) will change lanes, and on the Y-axis(up and 
