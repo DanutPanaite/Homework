@@ -82,6 +82,7 @@ int numberOfShields = 3;
 int lastNumberOfShields = 3;
 int defaultLevel = 1;
 int highScore;
+int chosenLevel = 1;
 
 // variables for the menu
 
@@ -91,6 +92,7 @@ int linkPart = 0;
 int infoMenuOption = 0;
 int secondaryMenu = 0;
 int brightness = 128;
+int endMenuOption = 0;
 
 bool gameJustOpened = true;
 bool inMainMenu = true;
@@ -124,7 +126,6 @@ void setup()
   lcd.begin(16,2);
   lcd.createChar(0, heartShape);
   lcd.createChar(1, shieldShape);
-  Serial.begin(9600);
   EEPROM.get(0, highScore);
   pinMode(pinBacklight, OUTPUT);
 }
@@ -276,7 +277,6 @@ void endGame()        //when the game is over i make sure i print to the lcd the
     EEPROM.put(0, Score);
     lcd.setCursor(0,0);
     lcd.print("You got a ");
-    lcd.print(highScore - Score);
     lcd.setCursor(2,1);
     lcd.print("high score!");
   }
@@ -305,7 +305,6 @@ void RunGame()            // the function that is running the game
     }
   else
     didCheckLevel = true;
-  Serial.println(millis() - levelReset - lastLevelChange);
   if(((millis() - levelReset - lastLevelChange) >= levelTimer && currentLevel < 7) || shouldChangeLevel == true){      // i want the level to change based on seconds survived
     currentLevel++;
     shouldChangeLevel = false;
@@ -327,19 +326,19 @@ void RunGame()            // the function that is running the game
         break;
       case 3:    
         carSpeed = 250;
-        levelTimer = 40000;
+        levelTimer = 30000;
         botSpawnRate = 12.5 * carSpeed;
         scoreIncrement = 3;
         break;
       case 4:    
         carSpeed = 125;
-        levelTimer = 90000;
+        levelTimer = 60000;
         botSpawnRate = 12.5 * carSpeed;
         scoreIncrement = 4;
         break;
       case 5:
         carSpeed = 80;
-        levelTimer = 90000;
+        levelTimer = 60000;
         botSpawnRate = 12.5 * carSpeed;
         scoreIncrement = 5;
         break;
@@ -347,6 +346,12 @@ void RunGame()            // the function that is running the game
         carSpeed = 60;
         botSpawnRate = 12.5 * carSpeed;
         scoreIncrement = 6;
+        levelTimer = 20000;
+        break;
+      case 7:
+        carSpeed = 40;
+        botSpawnRate = 12.5 * carSpeed;
+        scoreIncrement = 7;
         break;
     }
   }
@@ -563,7 +568,7 @@ void OptionsMenu()                                   //this function takes care 
         joyMoved = true;
       } 
       if (xValue > maxThreshold && joyMoved == false) {
-        if (currentLevel < 6 ) {
+        if (currentLevel < 7 ) {
           currentLevel += 1;
         } 
         joyMoved = true;
@@ -582,6 +587,7 @@ void OptionsMenu()                                   //this function takes care 
         }
       }
     }
+    chosenLevel = currentLevel;
     if(lockedBrightness == true){
       if (xValue < minThreshold && joyMoved == false) {
         if (brightness > 31) {
@@ -825,29 +831,77 @@ void EndMenu()
   lcd.setCursor(0,1);
   lcd.print("TIME:");
   lcd.print(elapsedTime - (levelReset/1000));
-  lcd.setCursor(10,1);
-  lcd.print(">");
+  lcd.setCursor(11,1);
   lcd.print("RETRY");
+  lcd.setCursor(11,0);
+  lcd.print("MENU");
+  lcd.setCursor(10, endMenuOption);
+  lcd.print(">");
+  xValue = analogRead(pinX);
+  yValue = analogRead(pinY);
+  if (xValue < minThreshold && joyMoved == false) {
+      if (endMenuOption < 1) {
+        endMenuOption += 1;
+      }
+      joyMoved = true;
+  } 
+  if (xValue > maxThreshold && joyMoved == false) {
+    if (endMenuOption > 0) {
+      endMenuOption -= 1;
+    } 
+    joyMoved = true;
+  }
+  if(joyMoved == true){
+    lcd.clear();  
+  }
+  if(xValue >= minThreshold && xValue <= maxThreshold)
+    joyMoved = false;
   swState = digitalRead(pinSW);
-  if (swState !=  lastSwState) {        //resetting the game
-      if (swState == HIGH) {
-        numberOfLives = 3;
-        numberOfShields = 3;
-        lastLevelChange = 0;
-        scoreIncrement = 1;    
-        carSpeed = 600;
-        botSpawnRate = 12.5 * carSpeed;
-        isGameOver = false;
-        ClearLastPlayerPosition();
-        ClearLastBotPosition();
-        botXCoordinate = 8;
-        botYCoordinate = 2;
-        playerXCoordinate = 2;
-        playerYCoordinate = 5;
-        levelReset = millis();
-        Score = 0;
-        currentLevel = 1;
-        lcd.clear();
+  if (swState !=  lastSwState)        //resetting the game
+      if (swState == HIGH){ 
+        if(endMenuOption == 1){
+          numberOfLives = 3;
+          numberOfShields = 3;
+          lastLevelChange = 0;
+          scoreIncrement = 1;    
+          carSpeed = 600;
+          botSpawnRate = 12.5 * carSpeed;
+          isGameOver = false;
+          gameStarted = true;
+          didCheckLevel = false;
+          ClearLastPlayerPosition();
+          ClearLastBotPosition();
+          botXCoordinate = 8;
+          botYCoordinate = 2;
+          playerXCoordinate = 2;
+          playerYCoordinate = 5;
+          levelReset = millis();
+          Score = 0;
+          currentLevel = chosenLevel;
+          lcd.clear();
+        }
+        if(endMenuOption == 0) {
+          numberOfLives = 3;
+          numberOfShields = 3;
+          lastLevelChange = 0;
+          scoreIncrement = 1; 
+          EEPROM.get(0, highScore);
+          didCheckLevel = false;
+          inMainMenu = true;  
+          carSpeed = 600;
+          botSpawnRate = 12.5 * carSpeed;
+          gameStarted = false;
+          isGameOver = false;
+          ClearLastPlayerPosition();
+          ClearLastBotPosition();
+          botXCoordinate = 8;
+          botYCoordinate = 2;
+          playerXCoordinate = 2;
+          playerYCoordinate = 5;
+          levelReset = millis();
+          Score = 0;
+          currentLevel = 1;
+          lcd.clear();
       }
   }
   lastSwState = swState;
@@ -856,6 +910,7 @@ void EndMenu()
 
 void loop()
 {
+  Serial.println(gameStarted);
   analogWrite(pinBacklight, brightness);      
   if(gameStarted == true){
     if(isGameOver == false)
