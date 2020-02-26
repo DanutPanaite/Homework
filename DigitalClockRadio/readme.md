@@ -4,7 +4,7 @@
  has an alarm option implemented using an active buzzer. Going through the menu is done by using the potentiometer and the button.
  <br>
 <br>
-[Video demonstration](https://youtu.be/x1dpq7ZVwLE)
+[Video demonstration](https://youtu.be/olPb2fpway0)
 <br>
   
 [Assembled Hardware](https://imgur.com/a/dEFSE9K?fbclid=IwAR3zfJak3ihWb1DgTOCFKKIBlvh1RqZPFbucRvqMo1ouUwFsH8FRKwh8CXg)  
