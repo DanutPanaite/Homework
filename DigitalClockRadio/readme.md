@@ -7,4 +7,4 @@
 [Video demonstration](https://youtu.be/x1dpq7ZVwLE)
 <br>
   
-[Assembled Hardware](https://imgur.com/a/f7fyY5l)  
+[Assembled Hardware](https://imgur.com/a/dEFSE9K?fbclid=IwAR3zfJak3ihWb1DgTOCFKKIBlvh1RqZPFbucRvqMo1ouUwFsH8FRKwh8CXg)  
