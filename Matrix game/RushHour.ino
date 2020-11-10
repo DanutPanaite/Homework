@@ -58,12 +58,16 @@ int maxThreshold = 600;
 int swState = HIGH;
 int lastSwState = HIGH;
 
+int defaultBotXCoordinate = 9;
 int playerXCoordinate = 2;
 int playerYCoordinate = 5;
 int botXCoordinate = 8;
 int botYCoordinate = 2;
 int Score = 0;
 int scoreIncrement = 1;
+
+int maxRows = 8;
+int maxColumns = 8;
 
 bool joyMoved = false;
 bool gameStarted = false;
@@ -160,7 +164,7 @@ void SpawnBot()                         //this function will spawn a bot at the 
 
 void CreateBot()         //it creates random coordinates for the bot cars
 {
-  botXCoordinate = 9;
+  botXCoordinate = defaultBotXCoordinate;
   int randomNumber = random(0,11);
   if(randomNumber % 2 == 0)
     botYCoordinate = 5;
@@ -172,13 +176,13 @@ void CreateBot()         //it creates random coordinates for the bot cars
 void CreateWalls()      
 {
   int row = 0;
-  for (int col = 0; col < 8; col++)
+  for (int col = 0; col < maxColumns; col++)
   {
     lc.setLed(0, col, row, true); // turns on LED at col, row
     delay(1);
   }
   row = 7;
-  for (int col = 0; col < 8; col++)
+  for (int col = 0; col < maxColumns; col++)
   {
     lc.setLed(0, col, row, true); // turns on LED at col, row
     delay(1);
